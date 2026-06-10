@@ -1,0 +1,3699 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#1a5fb4">
+    <title>نظام الدوام والإجازات - محطات الطاقة الشمسية</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+/* Solar Attendance System - Premium Design */
+:root {
+    --primary: #1a5fb4;
+    --primary-dark: #0d3b7a;
+    --primary-light: #4a90e2;
+    --accent: #f39c12;
+    --accent-light: #f5b041;
+    --success: #27ae60;
+    --danger: #e74c3c;
+    --warning: #f39c12;
+    --info: #3498db;
+    --dark: #1a1a2e;
+    --gray: #6c757d;
+    --light-gray: #f8f9fa;
+    --white: #ffffff;
+    --shadow: 0 4px 20px rgba(0,0,0,0.1);
+    --shadow-lg: 0 10px 40px rgba(0,0,0,0.15);
+    --radius: 16px;
+    --radius-sm: 8px;
+    --transition: all 0.3s ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', 'Tahoma', 'Arial', sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+    min-height: 100vh;
+    direction: rtl;
+    color: var(--dark);
+    overflow-x: hidden;
+}
+
+/* Login Screen */
+.login-screen {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 50%, var(--primary-light) 100%);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9999;
+}
+
+.login-container {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 40px;
+    width: 100%;
+    max-width: 420px;
+    box-shadow: var(--shadow-lg);
+    text-align: center;
+}
+
+.login-logo {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    font-size: 36px;
+    color: white;
+}
+
+.login-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 8px;
+}
+
+.login-subtitle {
+    font-size: 14px;
+    color: var(--gray);
+    margin-bottom: 30px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    text-align: right;
+}
+
+.form-label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--dark);
+    margin-bottom: 8px;
+}
+
+.form-input {
+    width: 100%;
+    padding: 14px 16px;
+    border: 2px solid #e0e0e0;
+    border-radius: var(--radius-sm);
+    font-size: 16px;
+    transition: var(--transition);
+    font-family: inherit;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(26, 95, 180, 0.1);
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 14px 28px;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    font-family: inherit;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    color: white;
+    width: 100%;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(26, 95, 180, 0.3);
+}
+
+.btn-success {
+    background: linear-gradient(135deg, var(--success), #2ecc71);
+    color: white;
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, var(--danger), #c0392b);
+    color: white;
+}
+
+.btn-warning {
+    background: linear-gradient(135deg, var(--warning), #e67e22);
+    color: white;
+}
+
+.btn-info {
+    background: linear-gradient(135deg, var(--info), #5dade2);
+    color: white;
+}
+
+.btn-secondary {
+    background: var(--light-gray);
+    color: var(--dark);
+}
+
+.btn-sm {
+    padding: 8px 16px;
+    font-size: 14px;
+}
+
+.btn-lg {
+    padding: 16px 32px;
+    font-size: 18px;
+}
+
+/* Main App */
+.app-container {
+    display: none;
+    min-height: 100vh;
+}
+
+/* Header */
+.app-header {
+    background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+    color: white;
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: var(--shadow);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.header-logo {
+    width: 44px;
+    height: 44px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+}
+
+.header-title {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.header-subtitle {
+    font-size: 12px;
+    opacity: 0.8;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.user-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.15);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+}
+
+.user-role {
+    background: var(--accent);
+    color: white;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.sync-status {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.sync-status.online {
+    background: rgba(39, 174, 96, 0.2);
+    color: #27ae60;
+}
+
+.sync-status.offline {
+    background: rgba(231, 76, 60, 0.2);
+    color: #e74c3c;
+}
+
+/* Navigation */
+.app-nav {
+    background: var(--white);
+    border-bottom: 1px solid #e0e0e0;
+    padding: 0 24px;
+    display: flex;
+    gap: 4px;
+    overflow-x: auto;
+}
+
+.nav-item {
+    padding: 16px 20px;
+    border: none;
+    background: none;
+    color: var(--gray);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: var(--transition);
+    white-space: nowrap;
+    font-family: inherit;
+}
+
+.nav-item:hover {
+    color: var(--primary);
+}
+
+.nav-item.active {
+    color: var(--primary);
+    border-bottom-color: var(--primary);
+}
+
+/* Main Content */
+.app-main {
+    padding: 24px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Cards */
+.card {
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    margin-bottom: 24px;
+}
+
+.card-header {
+    padding: 20px 24px;
+    border-bottom: 1px solid #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.card-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--dark);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.card-body {
+    padding: 24px;
+}
+
+/* Stats Grid */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    margin-bottom: 24px;
+}
+
+.stat-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 24px;
+    box-shadow: var(--shadow);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    transition: var(--transition);
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+}
+
+.stat-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    flex-shrink: 0;
+}
+
+.stat-icon.blue { background: linear-gradient(135deg, #e3f2fd, #bbdefb); }
+.stat-icon.green { background: linear-gradient(135deg, #e8f5e9, #c8e6c9); }
+.stat-icon.orange { background: linear-gradient(135deg, #fff3e0, #ffe0b2); }
+.stat-icon.red { background: linear-gradient(135deg, #ffebee, #ffcdd2); }
+.stat-icon.purple { background: linear-gradient(135deg, #f3e5f5, #e1bee7); }
+.stat-icon.teal { background: linear-gradient(135deg, #e0f2f1, #b2dfdb); }
+
+.stat-content {
+    flex: 1;
+}
+
+.stat-label {
+    font-size: 13px;
+    color: var(--gray);
+    margin-bottom: 4px;
+}
+
+.stat-value {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--dark);
+}
+
+/* Dashboard Date */
+.date-selector {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.date-selector input {
+    padding: 10px 16px;
+    border: 2px solid #e0e0e0;
+    border-radius: var(--radius-sm);
+    font-size: 16px;
+    font-family: inherit;
+}
+
+/* Tables */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.data-table th {
+    background: var(--light-gray);
+    padding: 14px 16px;
+    text-align: right;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--gray);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.data-table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 14px;
+}
+
+.data-table tr:hover td {
+    background: #fafafa;
+}
+
+/* Status Badges */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.badge-present {
+    background: #e8f5e9;
+    color: #2e7d32;
+}
+
+.badge-late {
+    background: #fff3e0;
+    color: #ef6c00;
+}
+
+.badge-leave {
+    background: #e3f2fd;
+    color: #1565c0;
+}
+
+.badge-card {
+    background: #f3e5f5;
+    color: #6a1b9a;
+}
+
+.badge-exit {
+    background: #ffebee;
+    color: #c62828;
+}
+
+.badge-help {
+    background: #e0f2f1;
+    color: #00695c;
+}
+
+.badge-disabled {
+    background: #f5f5f5;
+    color: #9e9e9e;
+}
+
+/* Action Buttons in Table */
+.action-btns {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.action-btn {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    font-family: inherit;
+}
+
+.action-btn:hover {
+    transform: scale(1.05);
+}
+
+/* Modal */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.modal-overlay.active {
+    display: flex;
+}
+
+.modal {
+    background: var(--white);
+    border-radius: var(--radius);
+    width: 100%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: var(--shadow-lg);
+    animation: modalSlide 0.3s ease;
+}
+
+@keyframes modalSlide {
+    from { transform: translateY(-30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.modal-header {
+    padding: 20px 24px;
+    border-bottom: 1px solid #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.modal-title {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: var(--gray);
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: var(--transition);
+}
+
+.modal-close:hover {
+    background: #f5f5f5;
+    color: var(--danger);
+}
+
+.modal-body {
+    padding: 24px;
+}
+
+.modal-footer {
+    padding: 16px 24px;
+    border-top: 1px solid #f0f0f0;
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+/* Form Elements */
+.select-input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #e0e0e0;
+    border-radius: var(--radius-sm);
+    font-size: 15px;
+    font-family: inherit;
+    background: white;
+    cursor: pointer;
+}
+
+.select-input:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+.textarea-input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #e0e0e0;
+    border-radius: var(--radius-sm);
+    font-size: 15px;
+    font-family: inherit;
+    resize: vertical;
+    min-height: 80px;
+}
+
+/* Quick Actions */
+.quick-actions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.quick-action-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 20px;
+    border: 2px solid #e0e0e0;
+    border-radius: var(--radius);
+    background: var(--white);
+    cursor: pointer;
+    transition: var(--transition);
+    font-family: inherit;
+}
+
+.quick-action-btn:hover {
+    border-color: var(--primary);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+}
+
+.quick-action-btn .icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+}
+
+.quick-action-btn .label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--dark);
+}
+
+/* Employee Card */
+.employee-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.employee-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 20px;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+    border: 2px solid transparent;
+}
+
+.employee-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--primary-light);
+}
+
+.employee-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 16px;
+}
+
+.employee-avatar {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 22px;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.employee-info h3 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.employee-info p {
+    font-size: 13px;
+    color: var(--gray);
+}
+
+.employee-actions {
+    display: flex;
+    gap: 8px;
+}
+
+/* Reports */
+.report-filters {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    align-items: end;
+}
+
+.filter-group {
+    flex: 1;
+    min-width: 200px;
+}
+
+.filter-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--gray);
+    margin-bottom: 6px;
+}
+
+/* Toast Notifications */
+.toast-container {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.toast {
+    background: var(--white);
+    border-radius: var(--radius-sm);
+    padding: 16px 24px;
+    box-shadow: var(--shadow-lg);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    animation: toastSlide 0.3s ease;
+    min-width: 300px;
+}
+
+.toast.success { border-right: 4px solid var(--success); }
+.toast.error { border-right: 4px solid var(--danger); }
+.toast.warning { border-right: 4px solid var(--warning); }
+.toast.info { border-right: 4px solid var(--info); }
+
+@keyframes toastSlide {
+    from { transform: translateY(-20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+/* Loading */
+.loading-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255,255,255,0.9);
+    z-index: 9998;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.loading-overlay.active {
+    display: flex;
+}
+
+.spinner {
+    width: 48px;
+    height: 48px;
+    border: 4px solid #e0e0e0;
+    border-top-color: var(--primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.empty-state-icon {
+    font-size: 64px;
+    margin-bottom: 16px;
+    opacity: 0.5;
+}
+
+.empty-state h3 {
+    font-size: 20px;
+    color: var(--dark);
+    margin-bottom: 8px;
+}
+
+.empty-state p {
+    color: var(--gray);
+}
+
+/* Print Styles */
+@media print {
+    .app-header, .app-nav, .no-print {
+        display: none !important;
+    }
+    .app-main {
+        padding: 0;
+    }
+    .card {
+        box-shadow: none;
+        border: 1px solid #ddd;
+    }
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .app-header {
+        padding: 12px 16px;
+    }
+    .header-title {
+        font-size: 15px;
+    }
+    .app-nav {
+        padding: 0 12px;
+    }
+    .nav-item {
+        padding: 12px 14px;
+        font-size: 13px;
+    }
+    .app-main {
+        padding: 16px;
+    }
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+    .stat-card {
+        padding: 16px;
+    }
+    .stat-icon {
+        width: 44px;
+        height: 44px;
+        font-size: 20px;
+    }
+    .stat-value {
+        font-size: 22px;
+    }
+    .data-table {
+        font-size: 13px;
+    }
+    .data-table th, .data-table td {
+        padding: 10px 12px;
+    }
+    .action-btns {
+        flex-direction: column;
+    }
+    .modal {
+        margin: 10px;
+    }
+    .report-filters {
+        flex-direction: column;
+    }
+    .filter-group {
+        min-width: 100%;
+    }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #a1a1a1;
+}
+
+/* Animations */
+.fade-in {
+    animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Section visibility */
+.section {
+    display: none;
+}
+.section.active {
+    display: block;
+    animation: fadeIn 0.3s ease;
+}
+
+/* Toggle Switch */
+.toggle-switch {
+    position: relative;
+    width: 50px;
+    height: 26px;
+    background: #e0e0e0;
+    border-radius: 13px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.toggle-switch.active {
+    background: var(--success);
+}
+
+.toggle-switch::after {
+    content: '';
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    background: white;
+    border-radius: 50%;
+    top: 2px;
+    right: 2px;
+    transition: var(--transition);
+}
+
+.toggle-switch.active::after {
+    right: 26px;
+}
+
+/* Settings Panel */
+.settings-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.settings-item:last-child {
+    border-bottom: none;
+}
+
+.settings-label {
+    font-weight: 600;
+}
+
+.settings-desc {
+    font-size: 13px;
+    color: var(--gray);
+    margin-top: 4px;
+}
+
+    </style>
+</head>
+<body>
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="spinner"></div>
+        <p>جاري التحميل...</p>
+    </div>
+
+    <!-- Login Screen -->
+    <div class="login-screen" id="loginScreen">
+        <div class="login-container">
+            <div class="login-logo">
+                <i class="fas fa-solar-panel"></i>
+            </div>
+            <h1 class="login-title">نظام الدوام والإجازات</h1>
+            <p class="login-subtitle">محطات الطاقة الشمسية - غرب الأنبار</p>
+
+            <form id="loginForm" onsubmit="event.preventDefault(); app.login();">
+                <div class="form-group">
+                    <label class="form-label">اسم المستخدم</label>
+                    <input type="text" class="form-input" id="loginUsername" placeholder="أدخل اسم المستخدم" required value="admin">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">كلمة المرور</label>
+                    <input type="password" class="form-input" id="loginPassword" placeholder="أدخل كلمة المرور" required value="1234">
+                </div>
+                <button type="submit" class="btn btn-primary btn-lg">
+                    <i class="fas fa-sign-in-alt"></i>
+                    تسجيل الدخول
+                </button>
+            </form>
+
+            <div style="margin-top: 20px; font-size: 13px; color: #6c757d;">
+                <p>الحساب الافتراضي: admin / 1234</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main App -->
+    <div class="app-container" id="appContainer">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-left">
+                <div class="header-logo">
+                    <i class="fas fa-solar-panel"></i>
+                </div>
+                <div>
+                    <div class="header-title">نظام الدوام والإجازات</div>
+                    <div class="header-subtitle">محطات الطاقة الشمسية - غرب الأنبار</div>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="sync-status offline" id="syncStatus">
+                    <i class="fas fa-wifi" id="syncIcon"></i>
+                    <span id="syncText">غير متصل</span>
+                </div>
+                <div class="user-badge">
+                    <i class="fas fa-user-circle"></i>
+                    <span id="currentUserName">Admin</span>
+                    <span class="user-role" id="currentUserRole">Admin</span>
+                </div>
+                <button class="btn btn-sm btn-secondary" onclick="app.logout()" style="background: rgba(255,255,255,0.15); color: white; border: none;">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="app-nav" id="appNav">
+            <button class="nav-item active" data-section="dashboard" onclick="app.navigate('dashboard')">
+                <i class="fas fa-chart-pie"></i> الرئيسية
+            </button>
+            <button class="nav-item manager-only" data-section="attendance" onclick="app.navigate('attendance')">
+                <i class="fas fa-clipboard-check"></i> الدوام اليومي
+            </button>
+            <button class="nav-item manager-only" data-section="employees" onclick="app.navigate('employees')">
+                <i class="fas fa-users"></i> الموظفين
+            </button>
+            <button class="nav-item manager-only" data-section="leaves" onclick="app.navigate('leaves')">
+                <i class="fas fa-calendar-alt"></i> الإجازات
+            </button>
+            <button class="nav-item" data-section="reports" onclick="app.navigate('reports')">
+                <i class="fas fa-file-alt"></i> التقارير
+            </button>
+            <button class="nav-item admin-only" data-section="settings" onclick="app.navigate('settings')">
+                <i class="fas fa-cog"></i> الإعدادات
+            </button>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="app-main" id="appMain">
+
+            <!-- Dashboard Section -->
+            <section class="section active" id="dashboardSection">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon blue"><i class="fas fa-users"></i></div>
+                        <div class="stat-content">
+                            <div class="stat-label">إجمالي الموظفين</div>
+                            <div class="stat-value" id="totalEmployees">0</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon green"><i class="fas fa-check-circle"></i></div>
+                        <div class="stat-content">
+                            <div class="stat-label">الحاضرون اليوم</div>
+                            <div class="stat-value" id="presentToday">0</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon orange"><i class="fas fa-clock"></i></div>
+                        <div class="stat-content">
+                            <div class="stat-label">المتأخرون</div>
+                            <div class="stat-value" id="lateToday">0</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon purple"><i class="fas fa-umbrella-beach"></i></div>
+                        <div class="stat-content">
+                            <div class="stat-label">في إجازة</div>
+                            <div class="stat-value" id="onLeaveToday">0</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon red"><i class="fas fa-id-card"></i></div>
+                        <div class="stat-content">
+                            <div class="stat-label">الكروت</div>
+                            <div class="stat-value" id="cardsToday">0</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon teal"><i class="fas fa-walking"></i></div>
+                        <div class="stat-content">
+                            <div class="stat-label">خروج أثناء الدوام</div>
+                            <div class="stat-value" id="exitsToday">0</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <i class="fas fa-calendar-day"></i>
+                            دوام اليوم: <span id="currentDate"></span>
+                        </div>
+                        <div class="date-selector">
+                            <input type="date" id="dashboardDate" onchange="app.loadDashboard()">
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div id="todayAttendanceTable"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Attendance Section -->
+            <section class="section" id="attendanceSection">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title"><i class="fas fa-clipboard-check"></i> تسجيل الدوام اليومي</div>
+                        <div class="date-selector">
+                            <input type="date" id="attendanceDate" onchange="app.loadAttendance()">
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="quick-actions" id="quickActions">
+                            <button class="quick-action-btn" onclick="app.markAllPresent()">
+                                <div class="icon" style="background: #e8f5e9; color: #27ae60;"><i class="fas fa-check"></i></div>
+                                <span class="label">الجميع حاضر</span>
+                            </button>
+                            <button class="quick-action-btn" onclick="app.showExceptionModal('late')">
+                                <div class="icon" style="background: #fff3e0; color: #f39c12;"><i class="fas fa-clock"></i></div>
+                                <span class="label">تأخير</span>
+                            </button>
+                            <button class="quick-action-btn" onclick="app.showExceptionModal('leave')">
+                                <div class="icon" style="background: #e3f2fd; color: #3498db;"><i class="fas fa-umbrella-beach"></i></div>
+                                <span class="label">إجازة</span>
+                            </button>
+                            <button class="quick-action-btn" onclick="app.showExceptionModal('card')">
+                                <div class="icon" style="background: #f3e5f5; color: #9b59b6;"><i class="fas fa-id-card"></i></div>
+                                <span class="label">كرت</span>
+                            </button>
+                            <button class="quick-action-btn" onclick="app.showExceptionModal('exit')">
+                                <div class="icon" style="background: #ffebee; color: #e74c3c;"><i class="fas fa-walking"></i></div>
+                                <span class="label">خروج</span>
+                            </button>
+                            <button class="quick-action-btn" onclick="app.showExceptionModal('help')">
+                                <div class="icon" style="background: #e0f2f1; color: #1abc9c;"><i class="fas fa-hands-helping"></i></div>
+                                <span class="label">مساعدة</span>
+                            </button>
+                        </div>
+                        <div id="attendanceTable"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Employees Section -->
+            <section class="section" id="employeesSection">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title"><i class="fas fa-users"></i> قائمة الموظفين</div>
+                        <button class="btn btn-success btn-sm admin-only" onclick="app.showAddEmployeeModal()">
+                            <i class="fas fa-plus"></i> إضافة موظف
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <div id="employeesGrid"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Leaves Section -->
+            <section class="section" id="leavesSection">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title"><i class="fas fa-calendar-alt"></i> الإجازات</div>
+                        <button class="btn btn-success btn-sm manager-only" onclick="app.showAddLeaveModal()">
+                            <i class="fas fa-plus"></i> إضافة إجازة
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <div id="leavesTable"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Reports Section -->
+            <section class="section" id="reportsSection">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title"><i class="fas fa-file-alt"></i> التقارير والإحصائيات</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="report-filters">
+                            <div class="filter-group">
+                                <label>من تاريخ</label>
+                                <input type="date" id="reportFromDate" class="form-input">
+                            </div>
+                            <div class="filter-group">
+                                <label>إلى تاريخ</label>
+                                <input type="date" id="reportToDate" class="form-input">
+                            </div>
+                            <div class="filter-group">
+                                <label>الموظف</label>
+                                <select id="reportEmployee" class="select-input"><option value="">جميع الموظفين</option></select>
+                            </div>
+                            <button class="btn btn-primary" onclick="app.generateReport()">
+                                <i class="fas fa-search"></i> عرض التقرير
+                            </button>
+                            <button class="btn btn-secondary" onclick="app.exportToCSV()">
+                                <i class="fas fa-file-csv"></i> تصدير CSV
+                            </button>
+                            <button class="btn btn-secondary no-print" onclick="window.print()">
+                                <i class="fas fa-print"></i> طباعة
+                            </button>
+                        </div>
+                        <div id="reportResults"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Settings Section -->
+            <section class="section" id="settingsSection">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title"><i class="fas fa-cog"></i> الإعدادات</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="settings-item">
+                            <div>
+                                <div class="settings-label">المزامنة السحابية (Supabase)</div>
+                                <div class="settings-desc">ربط مع قاعدة بيانات سحابية للمزامنة بين الأجهزة</div>
+                            </div>
+                            <div class="toggle-switch" id="cloudSyncToggle" onclick="app.toggleCloudSync()"></div>
+                        </div>
+                        <div class="settings-item">
+                            <div>
+                                <div class="settings-label">Supabase Project URL</div>
+                                <div class="settings-desc">رابط مشروع Supabase</div>
+                            </div>
+                            <input type="text" class="form-input" id="supabaseUrl" placeholder="https://your-project.supabase.co" style="width: 350px; text-align: left; direction: ltr;">
+                        </div>
+                        <div class="settings-item">
+                            <div>
+                                <div class="settings-label">Supabase Anon Key</div>
+                                <div class="settings-desc">مفتاح الوصول العام</div>
+                            </div>
+                            <input type="password" class="form-input" id="supabaseKey" placeholder="eyJhbGciOiJIUzI1NiIs..." style="width: 350px; text-align: left; direction: ltr;">
+                        </div>
+                        <div class="settings-item">
+                            <div>
+                                <div class="settings-label">تصدير البيانات</div>
+                                <div class="settings-desc">حفظ نسخة احتياطية (JSON)</div>
+                            </div>
+                            <button class="btn btn-secondary btn-sm" onclick="app.exportAllData()">
+                                <i class="fas fa-download"></i> تصدير
+                            </button>
+                        </div>
+                        <div class="settings-item">
+                            <div>
+                                <div class="settings-label">استيراد البيانات</div>
+                                <div class="settings-desc">استعادة من نسخة احتياطية</div>
+                            </div>
+                            <input type="file" id="importFile" accept=".json" onchange="app.importData(this)" style="display: none;">
+                            <button class="btn btn-secondary btn-sm" onclick="document.getElementById('importFile').click()">
+                                <i class="fas fa-upload"></i> استيراد
+                            </button>
+                        </div>
+                        <div class="settings-item" style="border-top: 2px solid #ffebee; margin-top: 20px; padding-top: 20px;">
+                            <div>
+                                <div class="settings-label" style="color: #e74c3c;">⚠️ مسح جميع البيانات</div>
+                                <div class="settings-desc">حذف كل البيانات - لا يمكن التراجع!</div>
+                            </div>
+                            <button class="btn btn-danger btn-sm" onclick="app.resetAllData()">
+                                <i class="fas fa-trash"></i> مسح الكل
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Exception Modal -->
+    <div class="modal-overlay" id="exceptionModal">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="modal-title" id="exceptionModalTitle">تسجيل استثناء</div>
+                <button class="modal-close" onclick="app.closeModal('exceptionModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">الموظف</label>
+                    <select class="select-input" id="exceptionEmployee"></select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">التاريخ</label>
+                    <input type="date" class="form-input" id="exceptionDate">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">الملاحظات</label>
+                    <textarea class="textarea-input" id="exceptionNotes" placeholder="أدخل الملاحظات..."></textarea>
+                </div>
+                <div class="form-group" id="exceptionTimeGroup" style="display: none;">
+                    <label class="form-label">الوقت</label>
+                    <input type="time" class="form-input" id="exceptionTime">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="app.closeModal('exceptionModal')">إلغاء</button>
+                <button class="btn btn-primary" onclick="app.saveException()">حفظ</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Employee Modal -->
+    <div class="modal-overlay" id="addEmployeeModal">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="modal-title">إضافة موظف جديد</div>
+                <button class="modal-close" onclick="app.closeModal('addEmployeeModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">الاسم الكامل <span style="color: #e74c3c;">*</span></label>
+                    <input type="text" class="form-input" id="newEmployeeName" placeholder="أدخل اسم الموظف" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">رقم الموظف</label>
+                    <input type="text" class="form-input" id="newEmployeeNumber" placeholder="رقم الموظف (اختياري)">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">القسم / الموقع</label>
+                    <input type="text" class="form-input" id="newEmployeeDepartment" placeholder="القسم أو الموقع">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">رقم الهاتف</label>
+                    <input type="tel" class="form-input" id="newEmployeePhone" placeholder="رقم الهاتف">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="app.closeModal('addEmployeeModal')">إلغاء</button>
+                <button class="btn btn-success" onclick="app.addEmployee()">إضافة</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Leave Modal -->
+    <div class="modal-overlay" id="addLeaveModal">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="modal-title">إضافة إجازة</div>
+                <button class="modal-close" onclick="app.closeModal('addLeaveModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">الموظف <span style="color: #e74c3c;">*</span></label>
+                    <select class="select-input" id="leaveEmployee"></select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">نوع الإجازة</label>
+                    <select class="select-input" id="leaveType">
+                        <option value="annual">إجازة سنوية</option>
+                        <option value="sick">إجازة مرضية</option>
+                        <option value="emergency">إجازة طارئة</option>
+                        <option value="official">إجازة رسمية</option>
+                        <option value="unpaid">إجازة بدون راتب</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">من تاريخ <span style="color: #e74c3c;">*</span></label>
+                    <input type="date" class="form-input" id="leaveFromDate">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">إلى تاريخ <span style="color: #e74c3c;">*</span></label>
+                    <input type="date" class="form-input" id="leaveToDate">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">الملاحظات</label>
+                    <textarea class="textarea-input" id="leaveNotes" placeholder="ملاحظات إضافية..."></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="app.closeModal('addLeaveModal')">إلغاء</button>
+                <button class="btn btn-success" onclick="app.addLeave()">حفظ</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+// Solar Attendance System - Main Application with Supabase Integration
+// محطات الطاقة الشمسية - غرب الأنبار
+// Version 2.0 - Full Cloud Sync
+
+class SolarAttendanceApp {
+    constructor() {
+        this.db = null;
+        this.supabase = null;
+        this.supabaseConnected = false;
+        this.currentUser = null;
+        this.cloudSyncEnabled = false;
+        this.supabaseUrl = '';
+        this.supabaseKey = '';
+        this.currentExceptionType = '';
+        this.syncInProgress = false;
+        this.pendingSync = false;
+        this.realtimeChannels = [];
+
+        this.init();
+    }
+
+    async init() {
+        this.showLoading(true);
+
+        try {
+            // Initialize IndexedDB first (always works offline)
+            await this.initDatabase();
+
+            // Seed default employees if none exist
+            await this.seedEmployees();
+
+            // Load settings
+            await this.loadSettings();
+
+            // Try to initialize Supabase if configured
+            if (this.cloudSyncEnabled && this.supabaseUrl && this.supabaseKey) {
+                await this.initSupabase();
+            }
+
+            // Setup network listeners
+            this.setupNetworkListeners();
+
+            // Check if user is logged in
+            const savedUser = localStorage.getItem('solarAttendanceUser');
+            if (savedUser) {
+                this.currentUser = JSON.parse(savedUser);
+                this.showApp();
+            } else {
+                this.showLogin();
+            }
+
+            // Set default dates
+            this.setDefaultDates();
+
+            // Setup event listeners
+            this.setupEventListeners();
+
+            // Update UI status
+            this.updateSyncStatus();
+
+        } catch (error) {
+            console.error('Init error:', error);
+            this.showToast('خطأ في تهيئة النظام', 'error');
+        } finally {
+            this.showLoading(false);
+        }
+    }
+
+    async seedEmployees() {
+        const employees = await this.getAllFromStore('employees');
+        if (employees.length === 0) {
+            // Add default employees
+            const defaultEmployees = [
+  {
+    "id": 1,
+    "name": "محمد صالح محمد صالح",
+    "department": "رئيس مهندسين اقدم اول",
+    "number": "1",
+    "status": "active"
+  },
+  {
+    "id": 2,
+    "name": "سامر سالم اسماعيل ابراهيم",
+    "department": "مهندس",
+    "number": "2",
+    "status": "active"
+  },
+  {
+    "id": 3,
+    "name": "وقاص فائق شاكر عبدالله",
+    "department": "معاون مهندس تقني",
+    "number": "3",
+    "status": "active"
+  },
+  {
+    "id": 4,
+    "name": "نصيف جاسم محمد احمد",
+    "department": "سائق اقدم",
+    "number": "4",
+    "status": "active"
+  },
+  {
+    "id": 5,
+    "name": "عبدالحميد ياسين خلف حسن",
+    "department": "كاتب",
+    "number": "5",
+    "status": "active"
+  },
+  {
+    "id": 6,
+    "name": "صالح رشيد تركي وكاع",
+    "department": "كاتب",
+    "number": "6",
+    "status": "active"
+  },
+  {
+    "id": 7,
+    "name": "اسماعيل عاصم اسماعيل خلف",
+    "department": "معاون مهندس تقني",
+    "number": "7",
+    "status": "active"
+  },
+  {
+    "id": 8,
+    "name": "سعد كامل حسني علي",
+    "department": "حرفي اقدم",
+    "number": "8",
+    "status": "active"
+  },
+  {
+    "id": 9,
+    "name": "عمر صباح سلامة عبدالمجيد",
+    "department": "مهندس",
+    "number": "9",
+    "status": "active"
+  },
+  {
+    "id": 10,
+    "name": "حسين فلاح محمود علي",
+    "department": "محاسب",
+    "number": "10",
+    "status": "active"
+  },
+  {
+    "id": 11,
+    "name": "علي جمعه علي صالح",
+    "department": "مهندس",
+    "number": "11",
+    "status": "active"
+  },
+  {
+    "id": 12,
+    "name": "مازن صلاح عبد فريح",
+    "department": "ر مهندسين",
+    "number": "12",
+    "status": "active"
+  },
+  {
+    "id": 13,
+    "name": "هشام عطا عبدالحميد ياسين",
+    "department": "حرفي اول",
+    "number": "13",
+    "status": "active"
+  },
+  {
+    "id": 14,
+    "name": "عمر جمعة عواد محمد",
+    "department": "مهندس تقني",
+    "number": "14",
+    "status": "active"
+  },
+  {
+    "id": 15,
+    "name": "عبداللطيف علي سليمان معارج",
+    "department": "مدير",
+    "number": "15",
+    "status": "active"
+  },
+  {
+    "id": 16,
+    "name": "مظفر علي سليمان معارج",
+    "department": "مدير فني",
+    "number": "16",
+    "status": "active"
+  },
+  {
+    "id": 17,
+    "name": "احمد حازم حماد ظاهر",
+    "department": "كاتب",
+    "number": "17",
+    "status": "active"
+  },
+  {
+    "id": 18,
+    "name": "طه ياسين عبدالله زلفو",
+    "department": "رئيس مهندسين",
+    "number": "18",
+    "status": "active"
+  },
+  {
+    "id": 19,
+    "name": "مدين عبدالمطلب ابراهيم",
+    "department": "رئيس فيزياوين",
+    "number": "19",
+    "status": "active"
+  },
+  {
+    "id": 20,
+    "name": "محمد باسل اسماعيل خلف",
+    "department": "حرفي اول",
+    "number": "20",
+    "status": "active"
+  },
+  {
+    "id": 21,
+    "name": "براء عبدالله نواف علي",
+    "department": "ملاحظ",
+    "number": "21",
+    "status": "active"
+  },
+  {
+    "id": 22,
+    "name": "مهند فلاح عبد فريح النمراوي",
+    "department": "مترجم",
+    "number": "22",
+    "status": "active"
+  },
+  {
+    "id": 23,
+    "name": "غسق محمد فوزي محمد",
+    "department": "كاتب",
+    "number": "23",
+    "status": "active"
+  },
+  {
+    "id": 24,
+    "name": "احمد عبدالجليل حسين وكاع",
+    "department": "باحث سياسين",
+    "number": "24",
+    "status": "active"
+  },
+  {
+    "id": 25,
+    "name": "شهب عبدالحميد سويد حسين",
+    "department": "معاون ملاحظ",
+    "number": "25",
+    "status": "active"
+  },
+  {
+    "id": 26,
+    "name": "عبدالله مهدي صالح خلف",
+    "department": "ملاحظ فني",
+    "number": "26",
+    "status": "active"
+  },
+  {
+    "id": 27,
+    "name": "اسماء عبدالله برجس عطية",
+    "department": "مهندس",
+    "number": "27",
+    "status": "active"
+  },
+  {
+    "id": 28,
+    "name": "مروان عامر فليح حسن",
+    "department": "مهندس",
+    "number": "28",
+    "status": "active"
+  },
+  {
+    "id": 29,
+    "name": "عمر واثق حمد حسين",
+    "department": "رئيس ملاحظين",
+    "number": "29",
+    "status": "active"
+  },
+  {
+    "id": 30,
+    "name": "نبيل احمد غنام عرسان",
+    "department": "م ر سواق",
+    "number": "30",
+    "status": "active"
+  },
+  {
+    "id": 31,
+    "name": "براء عبداللطيف ابراهيم مطلك",
+    "department": "حرفي",
+    "number": "31",
+    "status": "active"
+  },
+  {
+    "id": 32,
+    "name": "عبير محمد احمد محمد",
+    "department": "مهندس",
+    "number": "32",
+    "status": "active"
+  },
+  {
+    "id": 33,
+    "name": "معتز ماهر عبدالجبار اسود",
+    "department": "مهندس اقدم",
+    "number": "33",
+    "status": "active"
+  },
+  {
+    "id": 34,
+    "name": "سمير جمعة احمد سعيد",
+    "department": "فني",
+    "number": "34",
+    "status": "active"
+  },
+  {
+    "id": 35,
+    "name": "عبدالحميد مجيد اسماعيل محمود",
+    "department": "حرفي اول",
+    "number": "35",
+    "status": "active"
+  },
+  {
+    "id": 36,
+    "name": "يحيى صباح عليوي ناصر",
+    "department": "ملاحظ فني",
+    "number": "36",
+    "status": "active"
+  },
+  {
+    "id": 37,
+    "name": "بلال حمدي عبدالرحمن محمد",
+    "department": "مدير فني",
+    "number": "37",
+    "status": "active"
+  },
+  {
+    "id": 38,
+    "name": "خليل خالد عناد صالح",
+    "department": "م ملاحظ فني",
+    "number": "38",
+    "status": "active"
+  },
+  {
+    "id": 39,
+    "name": "عدنان عبد حسين صالح",
+    "department": "محاسب",
+    "number": "39",
+    "status": "active"
+  },
+  {
+    "id": 40,
+    "name": "مدحت مشرف ابراهيم سعيد",
+    "department": "مدير اقدم",
+    "number": "40",
+    "status": "active"
+  },
+  {
+    "id": 41,
+    "name": "محمد يعقوب يوسف صالح",
+    "department": "معاون مصحح",
+    "number": "41",
+    "status": "active"
+  },
+  {
+    "id": 42,
+    "name": "سعد طلال كامل منير",
+    "department": "رئيس م اقدم اول",
+    "number": "42",
+    "status": "active"
+  },
+  {
+    "id": 43,
+    "name": "محمد راسم فرج وهيب",
+    "department": "م ملاحظ فني",
+    "number": "43",
+    "status": "active"
+  },
+  {
+    "id": 44,
+    "name": "عزيز احميد شهاب حمد",
+    "department": "م ر حرفي",
+    "number": "44",
+    "status": "active"
+  },
+  {
+    "id": 45,
+    "name": "عمار احميد شهاب حمد",
+    "department": "حرفي اقدم",
+    "number": "45",
+    "status": "active"
+  },
+  {
+    "id": 46,
+    "name": "احمد  احميد شهاب حمد",
+    "department": "حرفي اقدم",
+    "number": "46",
+    "status": "active"
+  },
+  {
+    "id": 47,
+    "name": "سعد  احميد شهاب حمد",
+    "department": "حرفي اقدم",
+    "number": "47",
+    "status": "active"
+  },
+  {
+    "id": 48,
+    "name": "جمال عبدالناصر حسين محمد",
+    "department": "محاسب",
+    "number": "48",
+    "status": "active"
+  },
+  {
+    "id": 49,
+    "name": "عبدالستار جبير ندا ابراهيم",
+    "department": "معاون مدير فني",
+    "number": "49",
+    "status": "active"
+  },
+  {
+    "id": 50,
+    "name": "اكرم رافع عبدالله مشعل",
+    "department": "ملاحظ فني",
+    "number": "50",
+    "status": "active"
+  },
+  {
+    "id": 51,
+    "name": "خالد عبدالله علي عبدالجبار",
+    "department": "ملاحظ فني",
+    "number": "51",
+    "status": "active"
+  },
+  {
+    "id": 52,
+    "name": "شيماء رشيد تركي وكاع",
+    "department": "حرفي",
+    "number": "52",
+    "status": "active"
+  },
+  {
+    "id": 53,
+    "name": "محمد سعيد اسماعيل عبدالوهاب",
+    "department": "بايلوجي",
+    "number": "53",
+    "status": "active"
+  },
+  {
+    "id": 54,
+    "name": "عمار عبدالله علي عبدالجبار",
+    "department": "م ملاحظ فني",
+    "number": "54",
+    "status": "active"
+  },
+  {
+    "id": 55,
+    "name": "محمود سعود نزال شافي",
+    "department": "حرفي اقدم",
+    "number": "55",
+    "status": "active"
+  },
+  {
+    "id": 56,
+    "name": "محمد عادل عبدالله عايد",
+    "department": "ملاحظ فني",
+    "number": "56",
+    "status": "active"
+  },
+  {
+    "id": 57,
+    "name": "سفيان رحيم عناد طلك",
+    "department": "رئيس سواق اقدم",
+    "number": "57",
+    "status": "active"
+  },
+  {
+    "id": 58,
+    "name": "بهاء حامد طالب خليل",
+    "department": "مدير",
+    "number": "58",
+    "status": "active"
+  },
+  {
+    "id": 59,
+    "name": "حليم مجيد احميد شهاب",
+    "department": "م.مهندس",
+    "number": "59",
+    "status": "active"
+  },
+  {
+    "id": 60,
+    "name": "بلال عباس جسام",
+    "department": "معاون رئيس مهندسين",
+    "number": "60",
+    "status": "active"
+  },
+  {
+    "id": 61,
+    "name": "احمد موفق ثامر",
+    "department": "م ملاحظ فني",
+    "number": "61",
+    "status": "active"
+  },
+  {
+    "id": 62,
+    "name": "نبهان فوزي علوان",
+    "department": "محاسب",
+    "number": "62",
+    "status": "active"
+  },
+  {
+    "id": 63,
+    "name": "صهيب طالب طلك",
+    "department": "حرفي اول",
+    "number": "63",
+    "status": "active"
+  },
+  {
+    "id": 64,
+    "name": "طه قاسم عبد الرزاق",
+    "department": "حرفي اول",
+    "number": "64",
+    "status": "active"
+  },
+  {
+    "id": 65,
+    "name": "سعيد زياد سعيد",
+    "department": "مهندس",
+    "number": "65",
+    "status": "active"
+  },
+  {
+    "id": 66,
+    "name": "محمد غالب عبد سمير",
+    "department": "معاون ملاحظ",
+    "number": "66",
+    "status": "active"
+  }
+];
+
+            for (const emp of defaultEmployees) {
+                await this.addToStore('employees', emp);
+            }
+            console.log('Default employees seeded');
+        }
+    }
+
+    // ==================== DATABASE ====================
+
+    async initDatabase() {
+        return new Promise((resolve, reject) => {
+            const request = indexedDB.open('SolarAttendanceDB', 2);
+
+            request.onerror = () => reject(request.error);
+            request.onsuccess = () => {
+                this.db = request.result;
+                resolve();
+            };
+
+            request.onupgradeneeded = (event) => {
+                const db = event.target.result;
+
+                // Employees store
+                if (!db.objectStoreNames.contains('employees')) {
+                    const store = db.createObjectStore('employees', { keyPath: 'id', autoIncrement: true });
+                    store.createIndex('name', 'name', { unique: false });
+                    store.createIndex('status', 'status', { unique: false });
+                    store.createIndex('sync_status', 'sync_status', { unique: false });
+                }
+
+                // Attendance store
+                if (!db.objectStoreNames.contains('attendance')) {
+                    const store = db.createObjectStore('attendance', { keyPath: 'id', autoIncrement: true });
+                    store.createIndex('date', 'date', { unique: false });
+                    store.createIndex('employeeId', 'employeeId', { unique: false });
+                    store.createIndex('date_employee', ['date', 'employeeId'], { unique: true });
+                    store.createIndex('sync_status', 'sync_status', { unique: false });
+                }
+
+                // Leaves store
+                if (!db.objectStoreNames.contains('leaves')) {
+                    const store = db.createObjectStore('leaves', { keyPath: 'id', autoIncrement: true });
+                    store.createIndex('employeeId', 'employeeId', { unique: false });
+                    store.createIndex('fromDate', 'fromDate', { unique: false });
+                    store.createIndex('sync_status', 'sync_status', { unique: false });
+                }
+
+                // Users store
+                if (!db.objectStoreNames.contains('users')) {
+                    const store = db.createObjectStore('users', { keyPath: 'username' });
+                }
+
+                // Settings store
+                if (!db.objectStoreNames.contains('settings')) {
+                    db.createObjectStore('settings', { keyPath: 'key' });
+                }
+
+                // Sync log
+                if (!db.objectStoreNames.contains('sync_log')) {
+                    db.createObjectStore('sync_log', { keyPath: 'id', autoIncrement: true });
+                }
+            };
+        });
+    }
+
+    // ==================== SUPABASE ====================
+
+    async initSupabase() {
+        try {
+            // Wait for Supabase library to load
+            if (typeof window.supabase === 'undefined') {
+                console.warn('Supabase library not loaded yet, waiting...');
+                // Wait up to 5 seconds for library to load
+                for (let i = 0; i < 50; i++) {
+                    if (typeof window.supabase !== 'undefined') break;
+                    await new Promise(r => setTimeout(r, 100));
+                }
+            }
+
+            if (typeof window.supabase === 'undefined' || !window.supabase.createClient) {
+                console.warn('Supabase library not available');
+                this.showToast('مكتبة Supabase غير متوفرة', 'warning');
+                return;
+            }
+
+            // Use global supabase object from CDN
+            const supabaseClient = window.supabase;
+            this.supabase = supabaseClient.createClient(this.supabaseUrl, this.supabaseKey, {
+                realtime: {
+                    transport: window.WebSocket
+                }
+            });
+
+            // Test connection
+            const { data, error } = await this.supabase.from('employees').select('count', { count: 'exact', head: true });
+
+            if (error) throw error;
+
+            this.supabaseConnected = true;
+            console.log('Supabase connected successfully');
+
+            // Setup realtime listeners
+            this.setupRealtimeListeners();
+
+            // Sync any pending changes
+            await this.syncPendingChanges();
+
+        } catch (error) {
+            console.error('Supabase init failed:', error);
+            this.supabaseConnected = false;
+            this.supabase = null;
+        }
+    }
+
+    setupRealtimeListeners() {
+        if (!this.supabase) return;
+
+        // Listen for attendance changes
+        const attendanceChannel = this.supabase
+            .channel('attendance-changes')
+            .on('postgres_changes', {
+                event: '*',
+                schema: 'public',
+                table: 'attendance'
+            }, (payload) => {
+                this.handleRealtimeChange('attendance', payload);
+            })
+            .subscribe();
+
+        // Listen for employee changes
+        const employeesChannel = this.supabase
+            .channel('employees-changes')
+            .on('postgres_changes', {
+                event: '*',
+                schema: 'public',
+                table: 'employees'
+            }, (payload) => {
+                this.handleRealtimeChange('employees', payload);
+            })
+            .subscribe();
+
+        // Listen for leaves changes
+        const leavesChannel = this.supabase
+            .channel('leaves-changes')
+            .on('postgres_changes', {
+                event: '*',
+                schema: 'public',
+                table: 'leaves'
+            }, (payload) => {
+                this.handleRealtimeChange('leaves', payload);
+            })
+            .subscribe();
+
+        this.realtimeChannels = [attendanceChannel, employeesChannel, leavesChannel];
+    }
+
+    async handleRealtimeChange(table, payload) {
+        console.log(`Realtime ${table} change:`, payload);
+
+        if (payload.eventType === 'INSERT') {
+            // Add to local DB if not exists
+            const existing = await this.getFromStore(table, payload.new.id);
+            if (!existing) {
+                const data = { ...payload.new, sync_status: 'synced' };
+                await this.putToStore(table, data);
+            }
+        } else if (payload.eventType === 'UPDATE') {
+            // Update local record
+            const data = { ...payload.new, sync_status: 'synced' };
+            await this.putToStore(table, data);
+        } else if (payload.eventType === 'DELETE') {
+            // Delete from local
+            await this.deleteFromStore(table, payload.old.id);
+        }
+
+        // Refresh UI
+        this.refreshCurrentView();
+    }
+
+    async syncPendingChanges() {
+        if (!this.supabase || this.syncInProgress) return;
+
+        this.syncInProgress = true;
+        this.updateSyncStatus('syncing');
+
+        try {
+            // Sync employees
+            await this.syncTable('employees', 'id');
+
+            // Sync attendance
+            await this.syncTable('attendance', 'id');
+
+            // Sync leaves
+            await this.syncTable('leaves', 'id');
+
+            this.showToast('تمت المزامنة بنجاح', 'success');
+
+        } catch (error) {
+            console.error('Sync error:', error);
+            this.showToast('خطأ في المزامنة', 'error');
+        } finally {
+            this.syncInProgress = false;
+            this.updateSyncStatus();
+        }
+    }
+
+    async syncTable(tableName, idField) {
+        // Get unsynced local records
+        const allRecords = await this.getAllFromStore(tableName);
+        const unsynced = allRecords.filter(r => r.sync_status === 'pending' || r.sync_status === 'modified');
+
+        for (const record of unsynced) {
+            try {
+                const { data, error } = await this.supabase
+                    .from(tableName)
+                    .upsert(record, { onConflict: idField });
+
+                if (error) throw error;
+
+                // Mark as synced
+                record.sync_status = 'synced';
+                await this.putToStore(tableName, record);
+
+            } catch (error) {
+                console.error(`Sync error for ${tableName}:`, error);
+            }
+        }
+
+        // Pull latest from cloud
+        const { data: cloudRecords, error } = await this.supabase
+            .from(tableName)
+            .select('*');
+
+        if (error) throw error;
+
+        if (cloudRecords) {
+            for (const record of cloudRecords) {
+                const localRecord = await this.getFromStore(tableName, record.id);
+
+                if (!localRecord || localRecord.sync_status === 'synced') {
+                    // Update local with cloud data
+                    const data = { ...record, sync_status: 'synced' };
+                    await this.putToStore(tableName, data);
+                }
+            }
+        }
+    }
+
+    // ==================== NETWORK ====================
+
+    setupNetworkListeners() {
+        window.addEventListener('online', () => {
+            this.updateSyncStatus();
+            if (this.cloudSyncEnabled && this.supabase) {
+                this.syncPendingChanges();
+            }
+        });
+
+        window.addEventListener('offline', () => {
+            this.updateSyncStatus();
+        });
+    }
+
+    updateSyncStatus(status) {
+        const syncStatus = document.getElementById('syncStatus');
+        const syncIcon = document.getElementById('syncIcon');
+        const syncText = document.getElementById('syncText');
+
+        if (!syncStatus) return;
+
+        if (status === 'syncing') {
+            syncStatus.className = 'sync-status online';
+            syncIcon.className = 'fas fa-sync-alt fa-spin';
+            syncText.textContent = 'جاري المزامنة...';
+        } else if (navigator.onLine && this.supabaseConnected) {
+            syncStatus.className = 'sync-status online';
+            syncIcon.className = 'fas fa-cloud';
+            syncText.textContent = 'متصل بالسحابة';
+        } else if (navigator.onLine) {
+            syncStatus.className = 'sync-status online';
+            syncIcon.className = 'fas fa-wifi';
+            syncText.textContent = 'متصل (محلي)';
+        } else {
+            syncStatus.className = 'sync-status offline';
+            syncIcon.className = 'fas fa-wifi';
+            syncText.textContent = 'غير متصل';
+        }
+    }
+
+    // ==================== DATABASE OPERATIONS ====================
+
+    async getAllFromStore(storeName) {
+        return new Promise((resolve, reject) => {
+            const transaction = this.db.transaction(storeName, 'readonly');
+            const store = transaction.objectStore(storeName);
+            const request = store.getAll();
+
+            request.onsuccess = () => resolve(request.result || []);
+            request.onerror = () => reject(request.error);
+        });
+    }
+
+    async getFromStore(storeName, key) {
+        return new Promise((resolve, reject) => {
+            const transaction = this.db.transaction(storeName, 'readonly');
+            const store = transaction.objectStore(storeName);
+            const request = store.get(key);
+
+            request.onsuccess = () => resolve(request.result);
+            request.onerror = () => reject(request.error);
+        });
+    }
+
+    async addToStore(storeName, data) {
+        return new Promise((resolve, reject) => {
+            const transaction = this.db.transaction(storeName, 'readwrite');
+            const store = transaction.objectStore(storeName);
+
+            // Mark as pending if cloud sync enabled
+            if (this.cloudSyncEnabled) {
+                data.sync_status = 'pending';
+            }
+
+            const request = store.add(data);
+
+            request.onsuccess = () => {
+                const id = request.result;
+
+                // Try to sync to cloud immediately
+                if (this.supabaseConnected && this.cloudSyncEnabled) {
+                    this.syncSingleRecord(storeName, { ...data, id });
+                }
+
+                resolve(id);
+            };
+            request.onerror = () => reject(request.error);
+        });
+    }
+
+    async putToStore(storeName, data) {
+        return new Promise((resolve, reject) => {
+            const transaction = this.db.transaction(storeName, 'readwrite');
+            const store = transaction.objectStore(storeName);
+
+            // Mark as modified if cloud sync enabled and was synced
+            if (this.cloudSyncEnabled && data.sync_status === 'synced') {
+                data.sync_status = 'modified';
+            } else if (this.cloudSyncEnabled && !data.sync_status) {
+                data.sync_status = 'pending';
+            }
+
+            const request = store.put(data);
+
+            request.onsuccess = () => {
+                // Try to sync to cloud immediately
+                if (this.supabaseConnected && this.cloudSyncEnabled) {
+                    this.syncSingleRecord(storeName, data);
+                }
+
+                resolve(request.result);
+            };
+            request.onerror = () => reject(request.error);
+        });
+    }
+
+    async deleteFromStore(storeName, key) {
+        return new Promise((resolve, reject) => {
+            const transaction = this.db.transaction(storeName, 'readwrite');
+            const store = transaction.objectStore(storeName);
+            const request = store.delete(key);
+
+            request.onsuccess = () => resolve();
+            request.onerror = () => reject(request.error);
+        });
+    }
+
+    async queryStore(storeName, indexName, value) {
+        return new Promise((resolve, reject) => {
+            const transaction = this.db.transaction(storeName, 'readonly');
+            const store = transaction.objectStore(storeName);
+            const index = store.index(indexName);
+            const request = index.getAll(value);
+
+            request.onsuccess = () => resolve(request.result || []);
+            request.onerror = () => reject(request.error);
+        });
+    }
+
+    async syncSingleRecord(tableName, record) {
+        if (!this.supabase) return;
+
+        try {
+            const { error } = await this.supabase
+                .from(tableName)
+                .upsert(record, { onConflict: 'id' });
+
+            if (error) throw error;
+
+            // Mark as synced in local DB
+            record.sync_status = 'synced';
+            const transaction = this.db.transaction(tableName, 'readwrite');
+            const store = transaction.objectStore(tableName);
+            store.put(record);
+
+        } catch (error) {
+            console.error('Single sync error:', error);
+        }
+    }
+
+    // ==================== AUTHENTICATION ====================
+
+    async login() {
+        const username = document.getElementById('loginUsername').value.trim();
+        const password = document.getElementById('loginPassword').value;
+
+        if (!username || !password) {
+            this.showToast('الرجاء إدخال اسم المستخدم وكلمة المرور', 'error');
+            return;
+        }
+
+        this.showLoading(true);
+
+        try {
+            // Check default admin
+            if (username === 'admin' && password === '1234') {
+                this.currentUser = { 
+                    username: 'admin', 
+                    role: 'admin', 
+                    name: 'المشرف',
+                    permissions: ['all']
+                };
+                localStorage.setItem('solarAttendanceUser', JSON.stringify(this.currentUser));
+                this.showApp();
+                this.showToast('تم تسجيل الدخول بنجاح', 'success');
+                return;
+            }
+
+            // Check stored users
+            const user = await this.getFromStore('users', username);
+            if (user && user.password === password) {
+                this.currentUser = user;
+                localStorage.setItem('solarAttendanceUser', JSON.stringify(this.currentUser));
+                this.showApp();
+                this.showToast('تم تسجيل الدخول بنجاح', 'success');
+            } else {
+                this.showToast('اسم المستخدم أو كلمة المرور غير صحيحة', 'error');
+            }
+        } catch (error) {
+            this.showToast('خطأ في تسجيل الدخول', 'error');
+            console.error(error);
+        } finally {
+            this.showLoading(false);
+        }
+    }
+
+    logout() {
+        // Unsubscribe from realtime channels
+        this.realtimeChannels.forEach(channel => {
+            if (channel) channel.unsubscribe();
+        });
+        this.realtimeChannels = [];
+
+        this.currentUser = null;
+        localStorage.removeItem('solarAttendanceUser');
+        this.showLogin();
+        this.showToast('تم تسجيل الخروج', 'info');
+    }
+
+    showLogin() {
+        document.getElementById('loginScreen').style.display = 'flex';
+        document.getElementById('appContainer').style.display = 'none';
+    }
+
+    showApp() {
+        document.getElementById('loginScreen').style.display = 'none';
+        document.getElementById('appContainer').style.display = 'block';
+
+        // Update user info
+        document.getElementById('currentUserName').textContent = this.currentUser.name || this.currentUser.username;
+        const roleBadge = document.getElementById('currentUserRole');
+        roleBadge.textContent = this.currentUser.role === 'admin' ? 'Admin' : 
+                                this.currentUser.role === 'manager' ? 'Manager' : 'Viewer';
+
+        // Show/hide admin elements
+        const adminElements = document.querySelectorAll('.admin-only');
+        const isAdmin = this.currentUser.role === 'admin';
+        adminElements.forEach(el => {
+            el.style.display = isAdmin ? '' : 'none';
+        });
+
+        // Show/hide manager elements
+        const managerElements = document.querySelectorAll('.manager-only');
+        const isManager = this.currentUser.role === 'admin' || this.currentUser.role === 'manager';
+        managerElements.forEach(el => {
+            el.style.display = isManager ? '' : 'none';
+        });
+
+        // Load initial data
+        this.loadDashboard();
+    }
+
+    // ==================== NAVIGATION ====================
+
+    navigate(section) {
+        // Update nav items
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.classList.remove('active');
+        });
+        document.querySelector(`[data-section="${section}"]`).classList.add('active');
+
+        // Show section
+        document.querySelectorAll('.section').forEach(sec => {
+            sec.classList.remove('active');
+        });
+        document.getElementById(section + 'Section').classList.add('active');
+
+        // Load section data
+        switch(section) {
+            case 'dashboard':
+                this.loadDashboard();
+                break;
+            case 'attendance':
+                this.loadAttendance();
+                break;
+            case 'employees':
+                this.loadEmployees();
+                break;
+            case 'leaves':
+                this.loadLeaves();
+                break;
+            case 'reports':
+                this.loadReportEmployees();
+                break;
+            case 'settings':
+                this.loadSettingsView();
+                break;
+        }
+    }
+
+    refreshCurrentView() {
+        const activeSection = document.querySelector('.section.active');
+        if (!activeSection) return;
+
+        const sectionId = activeSection.id;
+        if (sectionId === 'dashboardSection') this.loadDashboard();
+        else if (sectionId === 'attendanceSection') this.loadAttendance();
+        else if (sectionId === 'employeesSection') this.loadEmployees();
+        else if (sectionId === 'leavesSection') this.loadLeaves();
+    }
+
+    // ==================== DASHBOARD ====================
+
+    async loadDashboard() {
+        const date = document.getElementById('dashboardDate').value;
+        if (!date) return;
+
+        try {
+            // Get all employees
+            const employees = await this.getAllFromStore('employees');
+            const activeEmployees = employees.filter(e => e.status !== 'disabled');
+
+            // Get attendance for date
+            const attendance = await this.queryStore('attendance', 'date', date);
+
+            // Get leaves for date
+            const leaves = await this.getAllFromStore('leaves');
+            const activeLeaves = leaves.filter(l => {
+                if (l.status === 'cancelled') return false;
+                const fromDate = new Date(l.fromDate);
+                const toDate = new Date(l.toDate);
+                const checkDate = new Date(date);
+                return checkDate >= fromDate && checkDate <= toDate;
+            });
+
+            // Calculate stats
+            let present = 0, late = 0, onLeave = 0, cards = 0, exits = 0, helps = 0;
+
+            activeEmployees.forEach(emp => {
+                const att = attendance.find(a => a.employeeId === emp.id);
+                const leave = activeLeaves.find(l => l.employeeId === emp.id);
+
+                if (leave) {
+                    onLeave++;
+                } else if (att) {
+                    switch(att.status) {
+                        case 'present': present++; break;
+                        case 'late': late++; break;
+                        case 'card': cards++; break;
+                        case 'exit': exits++; break;
+                        case 'help': helps++; break;
+                        default: present++;
+                    }
+                } else {
+                    present++; // Default: present
+                }
+            });
+
+            // Update stats
+            document.getElementById('totalEmployees').textContent = activeEmployees.length;
+            document.getElementById('presentToday').textContent = present;
+            document.getElementById('lateToday').textContent = late;
+            document.getElementById('onLeaveToday').textContent = onLeave;
+            document.getElementById('cardsToday').textContent = cards;
+            document.getElementById('exitsToday').textContent = exits;
+
+            // Build table
+            this.renderDashboardTable(activeEmployees, attendance, activeLeaves, date);
+
+        } catch (error) {
+            console.error('Dashboard error:', error);
+        }
+    }
+
+    renderDashboardTable(employees, attendance, leaves, date) {
+        const isManager = this.currentUser.role === 'admin' || this.currentUser.role === 'manager';
+
+        const tableHTML = `
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>الموظف</th>
+                        <th>الرقم</th>
+                        <th>القسم</th>
+                        <th>الحالة</th>
+                        <th>الملاحظات</th>
+                        ${isManager ? '<th>الإجراءات</th>' : ''}
+                    </tr>
+                </thead>
+                <tbody>
+                    ${employees.map(emp => {
+                        const att = attendance.find(a => a.employeeId === emp.id);
+                        const leave = leaves.find(l => l.employeeId === emp.id);
+
+                        let status = 'حاضر';
+                        let statusClass = 'badge-present';
+                        let notes = '';
+
+                        if (leave) {
+                            status = 'إجازة';
+                            statusClass = 'badge-leave';
+                            notes = this.getLeaveTypeName(leave.type);
+                        } else if (att) {
+                            switch(att.status) {
+                                case 'late':
+                                    status = 'متأخر';
+                                    statusClass = 'badge-late';
+                                    notes = att.notes || '';
+                                    break;
+                                case 'card':
+                                    status = 'كرت';
+                                    statusClass = 'badge-card';
+                                    notes = att.notes || '';
+                                    break;
+                                case 'exit':
+                                    status = 'خروج';
+                                    statusClass = 'badge-exit';
+                                    notes = att.notes || '';
+                                    break;
+                                case 'help':
+                                    status = 'مساعدة';
+                                    statusClass = 'badge-help';
+                                    notes = att.notes || '';
+                                    break;
+                            }
+                        }
+
+                        const actions = isManager ? `
+                            <td>
+                                <div class="action-btns">
+                                    <button class="action-btn" style="background: #fff3e0; color: #ef6c00;" onclick="app.quickException(${emp.id}, 'late', '${date}')">تأخير</button>
+                                    <button class="action-btn" style="background: #f3e5f5; color: #6a1b9a;" onclick="app.quickException(${emp.id}, 'card', '${date}')">كرت</button>
+                                    <button class="action-btn" style="background: #ffebee; color: #c62828;" onclick="app.quickException(${emp.id}, 'exit', '${date}')">خروج</button>
+                                </div>
+                            </td>
+                        ` : '';
+
+                        return `
+                            <tr>
+                                <td><strong>${emp.name}</strong></td>
+                                <td>${emp.number || '-'}</td>
+                                <td>${emp.department || '-'}</td>
+                                <td><span class="badge ${statusClass}">${status}</span></td>
+                                <td>${notes}</td>
+                                ${actions}
+                            </tr>
+                        `;
+                    }).join('')}
+                </tbody>
+            </table>
+        `;
+
+        document.getElementById('todayAttendanceTable').innerHTML = tableHTML;
+    }
+
+    getLeaveTypeName(type) {
+        const types = {
+            'annual': 'سنوية',
+            'sick': 'مرضية',
+            'emergency': 'طارئة',
+            'official': 'رسمية',
+            'unpaid': 'بدون راتب'
+        };
+        return types[type] || type;
+    }
+
+    // ==================== ATTENDANCE ====================
+
+    async loadAttendance() {
+        const date = document.getElementById('attendanceDate').value;
+        if (!date) return;
+
+        const isManager = this.currentUser.role === 'admin' || this.currentUser.role === 'manager';
+
+        const employees = await this.getAllFromStore('employees');
+        const activeEmployees = employees.filter(e => e.status !== 'disabled');
+        const attendance = await this.queryStore('attendance', 'date', date);
+
+        const tableHTML = `
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>الموظف</th>
+                        <th>الرقم</th>
+                        <th>القسم</th>
+                        <th>الحالة</th>
+                        <th>الملاحظات</th>
+                        ${isManager ? '<th>الإجراءات</th>' : ''}
+                    </tr>
+                </thead>
+                <tbody>
+                    ${activeEmployees.map((emp, index) => {
+                        const att = attendance.find(a => a.employeeId === emp.id);
+                        let status = 'حاضر';
+                        let statusClass = 'badge-present';
+                        let notes = '';
+                        let actions = '';
+
+                        if (att) {
+                            switch(att.status) {
+                                case 'late':
+                                    status = 'متأخر';
+                                    statusClass = 'badge-late';
+                                    notes = att.notes || '';
+                                    break;
+                                case 'card':
+                                    status = 'كرت';
+                                    statusClass = 'badge-card';
+                                    notes = att.notes || '';
+                                    break;
+                                case 'exit':
+                                    status = 'خروج';
+                                    statusClass = 'badge-exit';
+                                    notes = att.notes || '';
+                                    break;
+                                case 'help':
+                                    status = 'مساعدة';
+                                    statusClass = 'badge-help';
+                                    notes = att.notes || '';
+                                    break;
+                            }
+
+                            if (isManager) {
+                                actions = `
+                                    <button class="action-btn" style="background: #e8f5e9; color: #2e7d32;" onclick="app.clearAttendance(${emp.id}, '${date}')">
+                                        <i class="fas fa-undo"></i> إلغاء
+                                    </button>
+                                `;
+                            }
+                        } else {
+                            if (isManager) {
+                                actions = `
+                                    <button class="action-btn" style="background: #fff3e0; color: #ef6c00;" onclick="app.quickException(${emp.id}, 'late', '${date}')">تأخير</button>
+                                    <button class="action-btn" style="background: #f3e5f5; color: #6a1b9a;" onclick="app.quickException(${emp.id}, 'card', '${date}')">كرت</button>
+                                    <button class="action-btn" style="background: #ffebee; color: #c62828;" onclick="app.quickException(${emp.id}, 'exit', '${date}')">خروج</button>
+                                    <button class="action-btn" style="background: #e0f2f1; color: #00695c;" onclick="app.quickException(${emp.id}, 'help', '${date}')">مساعدة</button>
+                                `;
+                            }
+                        }
+
+                        const actionsCell = isManager ? `<td><div class="action-btns">${actions}</div></td>` : '';
+
+                        return `
+                            <tr>
+                                <td>${index + 1}</td>
+                                <td><strong>${emp.name}</strong></td>
+                                <td>${emp.number || '-'}</td>
+                                <td>${emp.department || '-'}</td>
+                                <td><span class="badge ${statusClass}">${status}</span></td>
+                                <td>${notes}</td>
+                                ${actionsCell}
+                            </tr>
+                        `;
+                    }).join('')}
+                </tbody>
+            </table>
+        `;
+
+        document.getElementById('attendanceTable').innerHTML = tableHTML;
+    }
+
+    async markAllPresent() {
+        const date = document.getElementById('attendanceDate').value;
+        if (!date) return;
+
+        const employees = await this.getAllFromStore('employees');
+        const activeEmployees = employees.filter(e => e.status !== 'disabled');
+
+        // Clear existing attendance for date
+        const existing = await this.queryStore('attendance', 'date', date);
+        for (const att of existing) {
+            await this.deleteFromStore('attendance', att.id);
+
+            // Also delete from cloud if connected
+            if (this.supabaseConnected) {
+                await this.supabase.from('attendance').delete().eq('id', att.id);
+            }
+        }
+
+        this.showToast('تم تحديث الدوام - الجميع حاضر', 'success');
+        this.loadAttendance();
+        this.loadDashboard();
+    }
+
+    async quickException(employeeId, type, date) {
+        const employees = await this.getAllFromStore('employees');
+        const employee = employees.find(e => e.id === employeeId);
+
+        if (!employee) return;
+
+        // Check if record exists
+        const existing = await this.queryStore('attendance', 'date', date);
+        const existingRecord = existing.find(a => a.employeeId === employeeId);
+
+        const attendance = {
+            employeeId: employeeId,
+            date: date,
+            status: type,
+            notes: '',
+            createdAt: new Date().toISOString(),
+            createdBy: this.currentUser.username
+        };
+
+        if (existingRecord) {
+            attendance.id = existingRecord.id;
+            await this.putToStore('attendance', attendance);
+        } else {
+            await this.addToStore('attendance', attendance);
+        }
+
+        const typeNames = {
+            'late': 'التأخير',
+            'card': 'الكرت',
+            'exit': 'الخروج',
+            'help': 'المساعدة'
+        };
+
+        this.showToast(`تم تسجيل ${typeNames[type]} لـ ${employee.name}`, 'success');
+        this.loadAttendance();
+        this.loadDashboard();
+    }
+
+    async clearAttendance(employeeId, date) {
+        const existing = await this.queryStore('attendance', 'date', date);
+        const record = existing.find(a => a.employeeId === employeeId);
+
+        if (record) {
+            await this.deleteFromStore('attendance', record.id);
+
+            // Also delete from cloud
+            if (this.supabaseConnected) {
+                await this.supabase.from('attendance').delete().eq('id', record.id);
+            }
+
+            this.showToast('تم إلغاء التسجيل', 'success');
+            this.loadAttendance();
+            this.loadDashboard();
+        }
+    }
+
+    showExceptionModal(type) {
+        this.currentExceptionType = type;
+        const titles = {
+            'late': 'تسجيل تأخير',
+            'card': 'تسجيل كرت',
+            'exit': 'تسجيل خروج',
+            'help': 'تسجيل مساعدة'
+        };
+
+        document.getElementById('exceptionModalTitle').textContent = titles[type] || 'تسجيل استثناء';
+
+        // Populate employees
+        this.populateEmployeeSelect('exceptionEmployee');
+
+        // Set date
+        document.getElementById('exceptionDate').value = document.getElementById('attendanceDate').value;
+
+        // Show/hide time field for exit
+        document.getElementById('exceptionTimeGroup').style.display = type === 'exit' ? 'block' : 'none';
+
+        // Clear fields
+        document.getElementById('exceptionNotes').value = '';
+        document.getElementById('exceptionTime').value = '';
+
+        document.getElementById('exceptionModal').classList.add('active');
+    }
+
+    async saveException() {
+        const employeeId = parseInt(document.getElementById('exceptionEmployee').value);
+        const date = document.getElementById('exceptionDate').value;
+        const notes = document.getElementById('exceptionNotes').value;
+        const time = document.getElementById('exceptionTime').value;
+
+        if (!employeeId || !date) {
+            this.showToast('الرجاء اختيار الموظف والتاريخ', 'error');
+            return;
+        }
+
+        const attendance = {
+            employeeId: employeeId,
+            date: date,
+            status: this.currentExceptionType,
+            notes: notes + (time ? ` - الوقت: ${time}` : ''),
+            createdAt: new Date().toISOString(),
+            createdBy: this.currentUser.username
+        };
+
+        // Check if record exists
+        const existing = await this.queryStore('attendance', 'date', date);
+        const existingRecord = existing.find(a => a.employeeId === employeeId);
+
+        if (existingRecord) {
+            attendance.id = existingRecord.id;
+            await this.putToStore('attendance', attendance);
+        } else {
+            await this.addToStore('attendance', attendance);
+        }
+
+        this.closeModal('exceptionModal');
+        this.showToast('تم الحفظ بنجاح', 'success');
+        this.loadAttendance();
+        this.loadDashboard();
+    }
+
+    // ==================== EMPLOYEES ====================
+
+    async loadEmployees() {
+        const employees = await this.getAllFromStore('employees');
+        const isAdmin = this.currentUser.role === 'admin';
+
+        const gridHTML = employees.map(emp => `
+            <div class="employee-card ${emp.status === 'disabled' ? 'disabled' : ''}">
+                <div class="employee-header">
+                    <div class="employee-avatar">${emp.name.charAt(0)}</div>
+                    <div class="employee-info">
+                        <h3>${emp.name}</h3>
+                        <p>${emp.department || 'غير محدد'} | ${emp.number || 'بدون رقم'}</p>
+                        <p style="font-size: 12px; color: #6c757d;">${emp.phone || ''}</p>
+                    </div>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span class="badge ${emp.status === 'disabled' ? 'badge-disabled' : 'badge-present'}">
+                        ${emp.status === 'disabled' ? 'معطل' : 'نشط'}
+                    </span>
+                    <div class="employee-actions">
+                        ${isAdmin && emp.status !== 'disabled' ? `
+                            <button class="action-btn" style="background: #ffebee; color: #c62828;" onclick="app.toggleEmployeeStatus(${emp.id}, 'disabled')">
+                                <i class="fas fa-ban"></i> تعطيل
+                            </button>
+                        ` : ''}
+                        ${isAdmin && emp.status === 'disabled' ? `
+                            <button class="action-btn" style="background: #e8f5e9; color: #2e7d32;" onclick="app.toggleEmployeeStatus(${emp.id}, 'active')">
+                                <i class="fas fa-check"></i> تفعيل
+                            </button>
+                        ` : ''}
+                        <button class="action-btn" style="background: #e3f2fd; color: #1565c0;" onclick="app.viewEmployeeReport(${emp.id})">
+                            <i class="fas fa-chart-bar"></i> تقرير
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+
+        document.getElementById('employeesGrid').innerHTML = gridHTML || `
+            <div class="empty-state">
+                <div class="empty-state-icon">👥</div>
+                <h3>لا يوجد موظفين</h3>
+                <p>أضف موظفين جدد للبدء</p>
+            </div>
+        `;
+    }
+
+    showAddEmployeeModal() {
+        document.getElementById('newEmployeeName').value = '';
+        document.getElementById('newEmployeeNumber').value = '';
+        document.getElementById('newEmployeeDepartment').value = '';
+        document.getElementById('newEmployeePhone').value = '';
+        document.getElementById('addEmployeeModal').classList.add('active');
+    }
+
+    async addEmployee() {
+        const name = document.getElementById('newEmployeeName').value.trim();
+        const number = document.getElementById('newEmployeeNumber').value.trim();
+        const department = document.getElementById('newEmployeeDepartment').value.trim();
+        const phone = document.getElementById('newEmployeePhone').value.trim();
+
+        if (!name) {
+            this.showToast('الرجاء إدخال اسم الموظف', 'error');
+            return;
+        }
+
+        const employee = {
+            name: name,
+            number: number || null,
+            department: department || null,
+            phone: phone || null,
+            status: 'active',
+            createdAt: new Date().toISOString()
+        };
+
+        await this.addToStore('employees', employee);
+        this.closeModal('addEmployeeModal');
+        this.showToast('تم إضافة الموظف بنجاح', 'success');
+        this.loadEmployees();
+    }
+
+    async toggleEmployeeStatus(employeeId, status) {
+        const employee = await this.getFromStore('employees', employeeId);
+        if (employee) {
+            employee.status = status;
+            await this.putToStore('employees', employee);
+            this.showToast(status === 'disabled' ? 'تم تعطيل الموظف' : 'تم تفعيل الموظف', 'success');
+            this.loadEmployees();
+        }
+    }
+
+    async viewEmployeeReport(employeeId) {
+        const employee = await this.getFromStore('employees', employeeId);
+        if (!employee) return;
+
+        // Get attendance for last 30 days
+        const attendance = await this.getAllFromStore('attendance');
+        const employeeAttendance = attendance.filter(a => a.employeeId === employeeId);
+
+        // Get leaves
+        const leaves = await this.queryStore('leaves', 'employeeId', employeeId);
+
+        // Calculate stats
+        const present = employeeAttendance.filter(a => a.status === 'present' || !a.status).length;
+        const late = employeeAttendance.filter(a => a.status === 'late').length;
+        const cards = employeeAttendance.filter(a => a.status === 'card').length;
+        const exits = employeeAttendance.filter(a => a.status === 'exit').length;
+        const helps = employeeAttendance.filter(a => a.status === 'help').length;
+
+        // Show report in modal
+        const modalHTML = `
+            <div class="modal-overlay active" id="employeeReportModal">
+                <div class="modal" style="max-width: 700px;">
+                    <div class="modal-header">
+                        <div class="modal-title">تقرير الموظف: ${employee.name}</div>
+                        <button class="modal-close" onclick="document.getElementById('employeeReportModal').remove()">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="stats-grid" style="grid-template-columns: repeat(3, 1fr);">
+                            <div class="stat-card">
+                                <div class="stat-icon green"><i class="fas fa-check"></i></div>
+                                <div class="stat-content">
+                                    <div class="stat-label">حضور</div>
+                                    <div class="stat-value">${present}</div>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon orange"><i class="fas fa-clock"></i></div>
+                                <div class="stat-content">
+                                    <div class="stat-label">تأخير</div>
+                                    <div class="stat-value">${late}</div>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon purple"><i class="fas fa-id-card"></i></div>
+                                <div class="stat-content">
+                                    <div class="stat-label">كروت</div>
+                                    <div class="stat-value">${cards}</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h3 style="margin: 20px 0 10px;">سجل الحضور الأخير</h3>
+                        <table class="data-table">
+                            <thead>
+                                <tr><th>التاريخ</th><th>الحالة</th><th>الملاحظات</th></tr>
+                            </thead>
+                            <tbody>
+                                ${employeeAttendance.slice(-10).reverse().map(a => `
+                                    <tr>
+                                        <td>${a.date}</td>
+                                        <td><span class="badge ${a.status === 'late' ? 'badge-late' : a.status === 'card' ? 'badge-card' : a.status === 'exit' ? 'badge-exit' : a.status === 'help' ? 'badge-help' : 'badge-present'}">
+                                            ${a.status === 'late' ? 'متأخر' : a.status === 'card' ? 'كرت' : a.status === 'exit' ? 'خروج' : a.status === 'help' ? 'مساعدة' : 'حاضر'}
+                                        </span></td>
+                                        <td>${a.notes || '-'}</td>
+                                    </tr>
+                                `).join('') || '<tr><td colspan="3" style="text-align: center;">لا يوجد سجل</td></tr>'}
+                            </tbody>
+                        </table>
+
+                        <h3 style="margin: 20px 0 10px;">الإجازات</h3>
+                        <table class="data-table">
+                            <thead>
+                                <tr><th>من</th><th>إلى</th><th>النوع</th><th>الحالة</th></tr>
+                            </thead>
+                            <tbody>
+                                ${leaves.map(l => `
+                                    <tr>
+                                        <td>${l.fromDate}</td>
+                                        <td>${l.toDate}</td>
+                                        <td>${this.getLeaveTypeName(l.type)}</td>
+                                        <td><span class="badge ${l.status === 'cancelled' ? 'badge-disabled' : 'badge-present'}">
+                                            ${l.status === 'cancelled' ? 'ملغاة' : 'نشطة'}
+                                        </span></td>
+                                    </tr>
+                                `).join('') || '<tr><td colspan="4" style="text-align: center;">لا يوجد إجازات</td></tr>'}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" onclick="document.getElementById('employeeReportModal').remove()">إغلاق</button>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        document.body.insertAdjacentHTML('beforeend', modalHTML);
+    }
+
+    // ==================== LEAVES ====================
+
+    async loadLeaves() {
+        const leaves = await this.getAllFromStore('leaves');
+        const employees = await this.getAllFromStore('employees');
+        const isAdmin = this.currentUser.role === 'admin';
+
+        const tableHTML = `
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>الموظف</th>
+                        <th>النوع</th>
+                        <th>من</th>
+                        <th>إلى</th>
+                        <th>الملاحظات</th>
+                        <th>الحالة</th>
+                        ${isAdmin ? '<th>الإجراءات</th>' : ''}
+                    </tr>
+                </thead>
+                <tbody>
+                    ${leaves.map(leave => {
+                        const emp = employees.find(e => e.id === leave.employeeId);
+                        return `
+                            <tr>
+                                <td><strong>${emp ? emp.name : 'غير معروف'}</strong></td>
+                                <td>${this.getLeaveTypeName(leave.type)}</td>
+                                <td>${leave.fromDate}</td>
+                                <td>${leave.toDate}</td>
+                                <td>${leave.notes || '-'}</td>
+                                <td><span class="badge ${leave.status === 'cancelled' ? 'badge-disabled' : 'badge-present'}">
+                                    ${leave.status === 'cancelled' ? 'ملغاة' : 'نشطة'}
+                                </span></td>
+                                ${isAdmin ? `
+                                    <td>
+                                        <div class="action-btns">
+                                            ${leave.status !== 'cancelled' ? `
+                                                <button class="action-btn" style="background: #ffebee; color: #c62828;" onclick="app.cancelLeave(${leave.id})">
+                                                    <i class="fas fa-times"></i> إلغاء
+                                                </button>
+                                            ` : ''}
+                                            <button class="action-btn" style="background: #ffebee; color: #c62828;" onclick="app.deleteLeave(${leave.id})">
+                                                <i class="fas fa-trash"></i> حذف
+                                            </button>
+                                        </div>
+                                    </td>
+                                ` : ''}
+                            </tr>
+                        `;
+                    }).join('') || '<tr><td colspan="7" style="text-align: center; padding: 40px;">لا يوجد إجازات مسجلة</td></tr>'}
+                </tbody>
+            </table>
+        `;
+
+        document.getElementById('leavesTable').innerHTML = tableHTML;
+    }
+
+    showAddLeaveModal() {
+        this.populateEmployeeSelect('leaveEmployee');
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('leaveFromDate').value = today;
+        document.getElementById('leaveToDate').value = today;
+        document.getElementById('leaveNotes').value = '';
+        document.getElementById('addLeaveModal').classList.add('active');
+    }
+
+    async addLeave() {
+        const employeeId = parseInt(document.getElementById('leaveEmployee').value);
+        const type = document.getElementById('leaveType').value;
+        const fromDate = document.getElementById('leaveFromDate').value;
+        const toDate = document.getElementById('leaveToDate').value;
+        const notes = document.getElementById('leaveNotes').value;
+
+        if (!employeeId || !fromDate || !toDate) {
+            this.showToast('الرجاء ملء جميع الحقول المطلوبة', 'error');
+            return;
+        }
+
+        if (new Date(fromDate) > new Date(toDate)) {
+            this.showToast('تاريخ البداية يجب أن يكون قبل تاريخ النهاية', 'error');
+            return;
+        }
+
+        const leave = {
+            employeeId: employeeId,
+            type: type,
+            fromDate: fromDate,
+            toDate: toDate,
+            notes: notes,
+            status: 'active',
+            createdAt: new Date().toISOString(),
+            createdBy: this.currentUser.username
+        };
+
+        await this.addToStore('leaves', leave);
+        this.closeModal('addLeaveModal');
+        this.showToast('تم إضافة الإجازة بنجاح', 'success');
+        this.loadLeaves();
+        this.loadDashboard();
+    }
+
+    async cancelLeave(leaveId) {
+        const leave = await this.getFromStore('leaves', leaveId);
+        if (leave) {
+            leave.status = 'cancelled';
+            await this.putToStore('leaves', leave);
+            this.showToast('تم إلغاء الإجازة', 'success');
+            this.loadLeaves();
+            this.loadDashboard();
+        }
+    }
+
+    async deleteLeave(leaveId) {
+        if (confirm('هل أنت متأكد من حذف هذه الإجازة؟')) {
+            await this.deleteFromStore('leaves', leaveId);
+
+            // Also delete from cloud
+            if (this.supabaseConnected) {
+                await this.supabase.from('leaves').delete().eq('id', leaveId);
+            }
+
+            this.showToast('تم حذف الإجازة', 'success');
+            this.loadLeaves();
+            this.loadDashboard();
+        }
+    }
+
+    // ==================== REPORTS ====================
+
+    async loadReportEmployees() {
+        const employees = await this.getAllFromStore('employees');
+        const select = document.getElementById('reportEmployee');
+        select.innerHTML = '<option value="">جميع الموظفين</option>' + 
+            employees.map(e => `<option value="${e.id}">${e.name}</option>`).join('');
+    }
+
+    async generateReport() {
+        const fromDate = document.getElementById('reportFromDate').value;
+        const toDate = document.getElementById('reportToDate').value;
+        const employeeId = document.getElementById('reportEmployee').value;
+
+        if (!fromDate || !toDate) {
+            this.showToast('الرجاء تحديد الفترة', 'error');
+            return;
+        }
+
+        const employees = await this.getAllFromStore('employees');
+        const attendance = await this.getAllFromStore('attendance');
+        const leaves = await this.getAllFromStore('leaves');
+
+        // Filter by date range
+        const filteredAttendance = attendance.filter(a => {
+            const date = new Date(a.date);
+            return date >= new Date(fromDate) && date <= new Date(toDate);
+        });
+
+        // Filter by employee if selected
+        const targetEmployees = employeeId ? 
+            employees.filter(e => e.id === parseInt(employeeId)) : 
+            employees.filter(e => e.status !== 'disabled');
+
+        // Generate report
+        const reportData = targetEmployees.map(emp => {
+            const empAttendance = filteredAttendance.filter(a => a.employeeId === emp.id);
+            const empLeaves = leaves.filter(l => {
+                return l.employeeId === emp.id && 
+                       new Date(l.fromDate) <= new Date(toDate) && 
+                       new Date(l.toDate) >= new Date(fromDate) &&
+                       l.status !== 'cancelled';
+            });
+
+            const present = empAttendance.filter(a => !a.status || a.status === 'present').length;
+            const late = empAttendance.filter(a => a.status === 'late').length;
+            const cards = empAttendance.filter(a => a.status === 'card').length;
+            const exits = empAttendance.filter(a => a.status === 'exit').length;
+            const helps = empAttendance.filter(a => a.status === 'help').length;
+            const leaveDays = empLeaves.length;
+
+            // Calculate working days in range
+            const start = new Date(fromDate);
+            const end = new Date(toDate);
+            const diffTime = Math.abs(end - start);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+
+            return {
+                employee: emp,
+                present,
+                late,
+                cards,
+                exits,
+                helps,
+                leaveDays,
+                totalDays: diffDays,
+                attendanceRate: diffDays > 0 ? ((present + late + cards + exits + helps) / diffDays * 100).toFixed(1) : 0
+            };
+        });
+
+        const reportHTML = `
+            <div style="margin-bottom: 20px;">
+                <h3>تقرير الدوام من ${fromDate} إلى ${toDate}</h3>
+                <p>إجمالي الموظفين: ${targetEmployees.length}</p>
+            </div>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>الموظف</th>
+                        <th>الأيام</th>
+                        <th>حضور</th>
+                        <th>تأخير</th>
+                        <th>كروت</th>
+                        <th>خروج</th>
+                        <th>مساعدة</th>
+                        <th>إجازات</th>
+                        <th>نسبة الحضور</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${reportData.map(r => `
+                        <tr>
+                            <td><strong>${r.employee.name}</strong></td>
+                            <td>${r.totalDays}</td>
+                            <td>${r.present}</td>
+                            <td>${r.late}</td>
+                            <td>${r.cards}</td>
+                            <td>${r.exits}</td>
+                            <td>${r.helps}</td>
+                            <td>${r.leaveDays}</td>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <div style="flex: 1; height: 8px; background: #e0e0e0; border-radius: 4px; overflow: hidden;">
+                                        <div style="width: ${Math.min(r.attendanceRate, 100)}%; height: 100%; background: ${r.attendanceRate >= 90 ? '#27ae60' : r.attendanceRate >= 70 ? '#f39c12' : '#e74c3c'};"></div>
+                                    </div>
+                                    <span style="font-size: 13px; font-weight: 600;">${r.attendanceRate}%</span>
+                                </div>
+                            </td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            </table>
+        `;
+
+        document.getElementById('reportResults').innerHTML = reportHTML;
+    }
+
+    async exportToCSV() {
+        const fromDate = document.getElementById('reportFromDate').value;
+        const toDate = document.getElementById('reportToDate').value;
+
+        if (!fromDate || !toDate) {
+            this.showToast('الرجاء تحديد الفترة أولاً', 'error');
+            return;
+        }
+
+        const employees = await this.getAllFromStore('employees');
+        const attendance = await this.getAllFromStore('attendance');
+
+        const filteredAttendance = attendance.filter(a => {
+            const date = new Date(a.date);
+            return date >= new Date(fromDate) && date <= new Date(toDate);
+        });
+
+        // Generate CSV with BOM for Arabic
+        let csv = '\uFEFF';
+        csv += 'التاريخ,الموظف,الحالة,الملاحظات\n';
+
+        filteredAttendance.forEach(a => {
+            const emp = employees.find(e => e.id === a.employeeId);
+            const status = a.status === 'late' ? 'متأخر' : 
+                          a.status === 'card' ? 'كرت' : 
+                          a.status === 'exit' ? 'خروج' : 
+                          a.status === 'help' ? 'مساعدة' : 'حاضر';
+            csv += `${a.date},${emp ? emp.name : 'غير معروف'},${status},${a.notes || ''}\n`;
+        });
+
+        // Download
+        const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = `attendance_report_${fromDate}_to_${toDate}.csv`;
+        link.click();
+
+        this.showToast('تم تصدير التقرير بنجاح', 'success');
+    }
+
+    // ==================== SETTINGS ====================
+
+    async loadSettingsView() {
+        // Load current settings into UI
+        document.getElementById('supabaseUrl').value = this.supabaseUrl || '';
+        document.getElementById('supabaseKey').value = this.supabaseKey || '';
+
+        const toggle = document.getElementById('cloudSyncToggle');
+        if (this.cloudSyncEnabled) {
+            toggle.classList.add('active');
+        } else {
+            toggle.classList.remove('active');
+        }
+    }
+
+    async toggleCloudSync() {
+        this.cloudSyncEnabled = !this.cloudSyncEnabled;
+        document.getElementById('cloudSyncToggle').classList.toggle('active');
+
+        await this.putToStore('settings', { key: 'cloudSync', value: this.cloudSyncEnabled });
+
+        if (this.cloudSyncEnabled) {
+            this.supabaseUrl = document.getElementById('supabaseUrl').value.trim();
+            this.supabaseKey = document.getElementById('supabaseKey').value.trim();
+
+            if (!this.supabaseUrl || !this.supabaseKey) {
+                this.showToast('الرجاء إدخال رابط ومفتاح Supabase', 'error');
+                this.cloudSyncEnabled = false;
+                document.getElementById('cloudSyncToggle').classList.remove('active');
+                return;
+            }
+
+            await this.putToStore('settings', { key: 'supabaseUrl', value: this.supabaseUrl });
+            await this.putToStore('settings', { key: 'supabaseKey', value: this.supabaseKey });
+
+            await this.initSupabase();
+
+            if (this.supabaseConnected) {
+                this.showToast('تم تفعيل المزامنة السحابية', 'success');
+            } else {
+                this.showToast('فشل الاتصال بـ Supabase - تحقق من الإعدادات', 'error');
+                this.cloudSyncEnabled = false;
+                document.getElementById('cloudSyncToggle').classList.remove('active');
+            }
+        } else {
+            // Disconnect from Supabase
+            this.realtimeChannels.forEach(channel => {
+                if (channel) channel.unsubscribe();
+            });
+            this.realtimeChannels = [];
+            this.supabase = null;
+            this.supabaseConnected = false;
+            this.showToast('تم إيقاف المزامنة السحابية', 'info');
+        }
+
+        this.updateSyncStatus();
+    }
+
+    async syncData() {
+        if (!navigator.onLine) {
+            this.showToast('لا يوجد اتصال بالإنترنت', 'error');
+            return;
+        }
+
+        if (!this.supabase) {
+            this.showToast('لم يتم تكوين Supabase', 'error');
+            return;
+        }
+
+        await this.syncPendingChanges();
+    }
+
+    async exportAllData() {
+        const data = {
+            employees: await this.getAllFromStore('employees'),
+            attendance: await this.getAllFromStore('attendance'),
+            leaves: await this.getAllFromStore('leaves'),
+            users: await this.getAllFromStore('users'),
+            settings: await this.getAllFromStore('settings'),
+            exportDate: new Date().toISOString(),
+            version: '2.0'
+        };
+
+        const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = `solar_attendance_backup_${new Date().toISOString().split('T')[0]}.json`;
+        link.click();
+
+        this.showToast('تم تصدير البيانات بنجاح', 'success');
+    }
+
+    async importData(input) {
+        const file = input.files[0];
+        if (!file) return;
+
+        try {
+            const text = await file.text();
+            const data = JSON.parse(text);
+
+            if (!confirm('سيتم استبدال جميع البيانات الحالية. هل أنت متأكد؟')) return;
+
+            this.showLoading(true);
+
+            // Clear existing data
+            const stores = ['employees', 'attendance', 'leaves', 'users', 'settings'];
+            for (const storeName of stores) {
+                const items = await this.getAllFromStore(storeName);
+                for (const item of items) {
+                    const key = storeName === 'users' ? item.username : item.id;
+                    await this.deleteFromStore(storeName, key);
+                }
+            }
+
+            // Import new data
+            if (data.employees) {
+                for (const item of data.employees) {
+                    await this.addToStore('employees', item);
+                }
+            }
+            if (data.attendance) {
+                for (const item of data.attendance) {
+                    await this.addToStore('attendance', item);
+                }
+            }
+            if (data.leaves) {
+                for (const item of data.leaves) {
+                    await this.addToStore('leaves', item);
+                }
+            }
+            if (data.users) {
+                for (const item of data.users) {
+                    await this.putToStore('users', item);
+                }
+            }
+            if (data.settings) {
+                for (const item of data.settings) {
+                    await this.putToStore('settings', item);
+                }
+            }
+
+            // Reload settings
+            await this.loadSettings();
+
+            this.showToast('تم استيراد البيانات بنجاح', 'success');
+            this.refreshCurrentView();
+
+        } catch (error) {
+            this.showToast('خطأ في استيراد البيانات', 'error');
+            console.error(error);
+        } finally {
+            this.showLoading(false);
+            input.value = '';
+        }
+    }
+
+    async resetAllData() {
+        if (!confirm('تحذير! سيتم حذف جميع البيانات بشكل نهائي. هل أنت متأكد؟')) return;
+        if (!confirm('هل أنت متأكد تماماً؟ لا يمكن التراجع عن هذا الإجراء.')) return;
+
+        this.showLoading(true);
+
+        try {
+            // Clear all stores
+            const stores = ['employees', 'attendance', 'leaves', 'users', 'settings', 'sync_log'];
+            for (const storeName of stores) {
+                const items = await this.getAllFromStore(storeName);
+                for (const item of items) {
+                    const key = storeName === 'users' ? item.username : item.id;
+                    await this.deleteFromStore(storeName, key);
+                }
+            }
+
+            // Re-add default admin
+            await this.putToStore('users', {
+                username: 'admin',
+                password: '1234',
+                role: 'admin',
+                name: 'المشرف',
+                permissions: ['all']
+            });
+
+            // Reset settings
+            this.cloudSyncEnabled = false;
+            this.supabaseUrl = '';
+            this.supabaseKey = '';
+            this.supabase = null;
+            this.supabaseConnected = false;
+
+            // Clear localStorage
+            localStorage.removeItem('solarAttendanceUser');
+
+            this.showToast('تم إعادة تعيين جميع البيانات', 'success');
+            this.logout();
+
+        } catch (error) {
+            this.showToast('خطأ في مسح البيانات', 'error');
+            console.error(error);
+        } finally {
+            this.showLoading(false);
+        }
+    }
+
+    // ==================== UTILITIES ====================
+
+    populateEmployeeSelect(selectId) {
+        this.getAllFromStore('employees').then(employees => {
+            const activeEmployees = employees.filter(e => e.status !== 'disabled');
+            const select = document.getElementById(selectId);
+            if (select) {
+                select.innerHTML = activeEmployees.map(e => 
+                    `<option value="${e.id}">${e.name}</option>`
+                ).join('');
+            }
+        });
+    }
+
+    closeModal(modalId) {
+        document.getElementById(modalId).classList.remove('active');
+    }
+
+    showLoading(show) {
+        document.getElementById('loadingOverlay').classList.toggle('active', show);
+    }
+
+    showToast(message, type = 'info') {
+        const container = document.getElementById('toastContainer');
+        if (!container) return;
+
+        const toast = document.createElement('div');
+        toast.className = `toast ${type}`;
+
+        const icons = {
+            success: 'fa-check-circle',
+            error: 'fa-times-circle',
+            warning: 'fa-exclamation-triangle',
+            info: 'fa-info-circle'
+        };
+
+        toast.innerHTML = `
+            <i class="fas ${icons[type] || icons.info}" style="font-size: 20px;"></i>
+            <span>${message}</span>
+        `;
+
+        container.appendChild(toast);
+
+        setTimeout(() => {
+            toast.style.opacity = '0';
+            toast.style.transform = 'translateY(-20px)';
+            setTimeout(() => toast.remove(), 300);
+        }, 3000);
+    }
+
+    setDefaultDates() {
+        const today = new Date().toISOString().split('T')[0];
+        const dateInputs = ['dashboardDate', 'attendanceDate', 'exceptionDate', 'reportFromDate', 'reportToDate'];
+        dateInputs.forEach(id => {
+            const input = document.getElementById(id);
+            if (input) input.value = today;
+        });
+
+        this.updateCurrentDate();
+    }
+
+    updateCurrentDate() {
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        const dateStr = new Date().toLocaleDateString('ar-IQ', options);
+        const el = document.getElementById('currentDate');
+        if (el) el.textContent = dateStr;
+    }
+
+    setupEventListeners() {
+        // Login form
+        const loginForm = document.getElementById('loginForm');
+        if (loginForm) {
+            loginForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                this.login();
+            });
+        }
+    }
+
+    async loadSettings() {
+        const settings = await this.getAllFromStore('settings');
+        settings.forEach(setting => {
+            if (setting.key === 'cloudSync') this.cloudSyncEnabled = setting.value;
+            if (setting.key === 'supabaseUrl') this.supabaseUrl = setting.value;
+            if (setting.key === 'supabaseKey') this.supabaseKey = setting.value;
+        });
+    }
+
+    addSyncButton() {
+        // Add sync button to header if not exists
+        const headerRight = document.querySelector('.header-right');
+        if (headerRight && !document.getElementById('syncButton')) {
+            const syncBtn = document.createElement('button');
+            syncBtn.id = 'syncButton';
+            syncBtn.className = 'btn btn-sm btn-success';
+            syncBtn.style.cssText = 'margin-right: 8px; background: #27ae60; color: white;';
+            syncBtn.innerHTML = '<i class="fas fa-cloud-upload-alt"></i> مزامنة';
+            syncBtn.onclick = () => this.syncData();
+            headerRight.insertBefore(syncBtn, headerRight.firstChild);
+        }
+    }
+}
+
+// Initialize app
+const app = new SolarAttendanceApp();
+
+    </script>
+    <!-- Supabase Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.0/dist/umd/supabase.min.js"></script>
+</body>
+</html>
